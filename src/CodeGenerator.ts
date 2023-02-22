@@ -15,6 +15,7 @@ import Mustache from "mustache";
 import prettier from "prettier";
 import fs from 'fs';
 import chalk from "chalk";
+import { trim } from "./utils/util";
 
 export class CodeGenerator {
   readonly #parserResults: Record<string, ParserResult> = {};
@@ -77,7 +78,7 @@ export class CodeGenerator {
 
       case "interface": {
         const { name, description, properties } = modal;
-        output = `${ this.makeComment(description) }interface ${ name } ${ this.makePropertyTypes(properties) }`;
+        output = `${ this.makeComment(description) }interface ${ trim(name) } ${ this.makePropertyTypes(properties) }`;
         break;
       }
 
@@ -89,7 +90,7 @@ export class CodeGenerator {
       case "ref":
       case "specific":
       case "primitives": {
-        output = modal.type;
+        output = trim(modal.type);
         break;
       }
 
